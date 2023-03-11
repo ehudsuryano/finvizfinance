@@ -61,7 +61,7 @@ class Overview:
         """
         return list(self.order_dict.keys())
 
-    def screener_view(self, group="Sector", order="Name"):
+    def screener_view(self, group="Sector", order="Name", ascend=True):
         """Get screener table.
 
         Args:
@@ -90,7 +90,9 @@ class Overview:
             + "&"
             + self.order_dict[order]
         )
-
+        if not ascend:
+            self.url = self.url.replace("o=", "o=-")
+            
         soup = web_scrap(self.url)
         table = soup.find("table", class_="table-light")
         rows = table.findAll("tr")
